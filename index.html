@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>voxtek</title>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+            cursor: none; /* Oculta el cursor para mayor confusión */
+        }
+        #video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: none; /* Oculto hasta que haga clic */
+        }
+        #btn-inicio {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            background: #111;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón trampa para activar los permisos del navegador -->
+    <button id="btn-inicio">Click para continuar</button>
+
+    <video id="video" playsinline>
+        <!-- Enlace directo modificado de tu Google Drive -->
+        <source src="https://xn--hhrv46n.com" type="video/mp4">
+    </video>
+
+    <script>
+        const video = document.getElementById("video");
+        const boton = document.getElementById("btn-inicio");
+        let videoTerminado = false; 
+
+        async function forzarPantallaCompleta() {
+            try {
+                if (!document.fullscreenElement && !videoTerminado) {
+                    await document.documentElement.requestFullscreen({ keyboardLock: "browser" });
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Cuando hace clic en el botón trampa, se desata la broma
+        boton.addEventListener("click", async () => {
+            boton.style.display = "none"; // Borra el botón
+            video.style.display = "block"; // Muestra el video
+            video.muted = false;
+            await forzarPantallaCompleta();
+            await video.play();
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            if (!document.fullscreenElement && !videoTerminado) {
+                forzarPantallaCompleta();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && !videoTerminado) {
+                event.preventDefault(); 
+            }
+        });
+
+        video.addEventListener("ended", () => {
+            videoTerminado = true; 
+            document.body.style.cursor = "default"; // Devuelve el ratón
+            document.body.innerHTML = `
+                <div style="
+                    background: black;
+                    color: white;
+                    font-family: Arial, sans-serif;
+                    font-size: 60px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100vw;
+                    height: 100vh;">
+                    😂 ¡era una broma!
+                </div>`;
+        });
+    </script>
+</body>
+</html>
+
+
