@@ -43,8 +43,8 @@
     <button id="btn-inicio">Click para continuar</button>
 
     <video id="video" playsinline>
-        <!-- Tu nuevo enlace directo de Litterbox -->
-        <source src="https://catbox.moe" type="video/mp4">
+        <!-- Al estar en la misma carpeta de GitHub, basta con poner el nombre del archivo -->
+        <source src="vox.mp4" type="video/mp4">
     </video>
 
     <script>
@@ -62,10 +62,9 @@
             }
         }
 
-        // Cuando hace clic en el botón trampa, se desata la broma
         boton.addEventListener("click", async () => {
-            boton.style.display = "none"; // Borra el botón
-            video.style.display = "block"; // Muestra el video
+            boton.style.display = "none"; 
+            video.style.display = "block"; 
             video.muted = false;
             await forzarPantallaCompleta();
             await video.play();
@@ -85,7 +84,7 @@
 
         video.addEventListener("ended", () => {
             videoTerminado = true; 
-            document.body.style.cursor = "default"; // Devuelve el ratón
+            document.body.style.cursor = "default"; 
             document.body.innerHTML = `
                 <div style="
                     background: black;
@@ -103,6 +102,5 @@
     </script>
 </body>
 </html>
-
 
 
